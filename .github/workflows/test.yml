@@ -36,7 +36,7 @@ jobs:
       - name: Run Forge tests
         run: forge test -vvv
 
-              - name: Install Slither
+      - name: Install Slither
         run: pip install slither-analyzer
 
       - name: Run Slither
