@@ -18,10 +18,10 @@ contract LendingPoolTest is Test {
         token.mint(address(this), 1e24);
         token.transfer(user, 1e21);
 
-        token.approve(address(pool), type(uint).max);
+        token.approve(address(pool), type(uint256).max);
 
         vm.startPrank(user);
-        token.approve(address(pool), type(uint).max);
+        token.approve(address(pool), type(uint256).max);
         vm.stopPrank();
     }
 
@@ -69,18 +69,18 @@ contract LendingPoolTest is Test {
     }
 
     function testLiquidation() public {
-    vm.startPrank(user);
+        vm.startPrank(user);
 
-    pool.deposit(100);
-    pool.borrow(75); 
+        pool.deposit(100);
+        pool.borrow(75);
 
-    vm.stopPrank();
+        vm.stopPrank();
 
-    vm.warp(block.timestamp + 365 days);
+        vm.warp(block.timestamp + 365 days);
 
-    pool.liquidate(user);
+        pool.liquidate(user);
 
-    assertEq(pool.deposited(user), 0);
+        assertEq(pool.deposited(user), 0);
     }
 
     function testInterest() public {
@@ -89,7 +89,7 @@ contract LendingPoolTest is Test {
 
         vm.warp(block.timestamp + 365 days);
 
-        uint debt = pool.getDebt(address(this));
+        uint256 debt = pool.getDebt(address(this));
 
         assertGt(debt, 50);
     }

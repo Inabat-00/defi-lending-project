@@ -66,22 +66,21 @@ contract LendingPool {
 
     // ===== Liquidate =====
     function liquidate(address user) external {
-    uint256 maxBorrow = (deposited[user] * LTV) / 100;
+        uint256 maxBorrow = (deposited[user] * LTV) / 100;
 
-    uint256 debt = getDebt(user); 
+        uint256 debt = getDebt(user);
 
-    require(debt > maxBorrow, "not liquidatable");
+        require(debt > maxBorrow, "not liquidatable");
 
-    deposited[user] = 0;
-    borrowed[user] = 0;
-}
+        deposited[user] = 0;
+        borrowed[user] = 0;
+    }
 
     // ===== Interest =====
     function getDebt(address user) public view returns (uint256) {
         uint256 timePassed = block.timestamp - lastUpdate[user];
 
-        uint256 interest = (borrowed[user] * interestRate * timePassed)
-            / (365 days * 100);
+        uint256 interest = (borrowed[user] * interestRate * timePassed) / (365 days * 100);
 
         return borrowed[user] + interest;
     }
